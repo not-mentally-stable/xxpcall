@@ -18,7 +18,7 @@ This utility helps you safely execute functions that might fail intermittently (
 
 ## 📦 Installation
 
-Simply drop the `xxpcall.lua` file into your Roblox project (e.g., `ServerScriptService/xxpcall`), the script will automatically put the function in [_G.](https://devforum.roblox.com/t/how-do-i-use-g-in-roblox-scripting/2116907)
+Simply drop the `xxpcall.luau` file into your Roblox project (e.g., `ServerScriptService/xxpcall`), the script will automatically put the function in [_G.](https://devforum.roblox.com/t/how-do-i-use-g-in-roblox-scripting/2116907)
 
 ```Luau
 -- you can call the funtion in any script without require just type
