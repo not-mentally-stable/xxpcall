@@ -1,4 +1,4 @@
-# xxpcall — Enhanced Safe Function Executor for Roblox (Luau)
+# xxpcall Enhanced Safe Function Executor for Roblox (Luau)
 
 `xxpcall` is a powerful wrapper around Luau’s native `pcall`, providing built-in retry logic, cooldown intervals, and callback support for better error handling and fault tolerance in Roblox development.
 
