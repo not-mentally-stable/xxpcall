@@ -8,11 +8,11 @@ This utility helps you safely execute functions that might fail intermittently (
 
 ## 🚀 Features
 
-- 🔁 **Automatic Retries** — Retry a failed function multiple times before giving up.  
-- ⏱️ **Cooldowns Between Retries** — Optional delay between retry attempts.  
-- 🧩 **Error Callback** — Define a function to handle final failure cases.  
-- ⚙️ **Yield or Async Mode** — Choose whether the function should yield (`task.wait`) or not (`task.delay` / `task.spawn`).  
-- 🛡️ **Strict Type Safety** — Enforced with Luau’s strict mode (`--!strict`).
+- 🔁 **Automatic Retries**  Retry a failed function multiple times before giving up.  
+- ⏱️ **Cooldowns Between Retries** Optional delay between retry attempts.  
+- 🧩 **Error Callback** Define a function to handle final failure cases.  
+- ⚙️ **Yield or Async Mode** Choose whether the function should yield (`task.wait`) or not (`task.delay` / `task.spawn`).  
+- 🛡️ **Strict Type Safety** Enforced with Luau’s strict mode (`--!strict`).
 
 ---
 
