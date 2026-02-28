@@ -1,53 +1,50 @@
---!strict
+local xxpcall = {}
 
---// dont remove the !strict comment
-_G.xxpcall = function(
-	RetryAttempts: number,
-	CooldownBetweenRetrys: number,
-	MainFunction: () -> any,
-	CallBackFunc: ((string) -> ())?,
-	ShouldYield: boolean?
-): (boolean, any)
-	
-	assert(type(RetryAttempts) == "number" and RetryAttempts >= 1, "RetryAttempts must be a positive number")
-	assert(type(CooldownBetweenRetrys) == "number" and CooldownBetweenRetrys >= 0, "CooldownBetweenRetrys must be non-negative")
-	assert(type(MainFunction) == "function", "MainFunction must be a function")
+local asrt, isit = assert, type
+
+local function xxpcall_run(RetryAttempts, Cooldown, MainFunction, CallBackFunc)
+    --// if your not an idiot (or not connect inside a Remote) you can remove this enitre check
+	asrt(isit(RetryAttempts) == "number", "RetryAttempts must be a number")
+	asrt(RetryAttempts >= 0, "RetryAttempts must not be lower than 0")
+	asrt(not math.isinf(RetryAttempts), "RetryAttempts cannot be infinite")
+
+	asrt(isit(Cooldown) == "number", "Cooldown must be a number")
+	asrt(Cooldown >= 0, "Cooldown must not be lower than 0")
+	asrt(Cooldown <= 10000, "Cooldown must not exceed 10000")
+	asrt(not math.isinf(Cooldown), "Cooldown cannot be infinite")
+
+	asrt(isit(MainFunction) == "function", "MainFunction must be a function")
+
 	if CallBackFunc ~= nil then
-		assert(type(CallBackFunc) == "function", "CallBackFunc must be a function or nil")
-	end
-	if ShouldYield == nil then
-		ShouldYield = true
+		asrt(isit(CallBackFunc) == "function", "CallBackFunc must be a function or nil")
 	end
 
-	local attempt = 0
-	local success = false
-	local result: any
-	local lastError: string? = nil
 
-	while attempt < RetryAttempts do
-		attempt += 1
-		success, result = pcall(MainFunction)
+	local lastError = "Unknown error"
+
+	for attempt = 1, RetryAttempts do
+		local success, result = xpcall(MainFunction, debug.traceback)
+
 		if success then
 			return true, result
-		else
-			lastError = tostring(result)
-			if attempt < RetryAttempts and CooldownBetweenRetrys > 0 then
-				if ShouldYield then
-					task.wait(CooldownBetweenRetrys)
-				else
-					task.delay(CooldownBetweenRetrys, function() end)
-				end
-			end
+		end
+
+		lastError = tostring(result)
+
+		if attempt < RetryAttempts and Cooldown > 0 then
+			task.wait(Cooldown)
 		end
 	end
 
 	if CallBackFunc then
-		if ShouldYield then
-			CallBackFunc(lastError or "Unknown error")
-		else
-			task.spawn(CallBackFunc, lastError or "Unknown error")
-		end
+		CallBackFunc(lastError)
 	end
 
 	return false, lastError
 end
+
+return setmetatable(xxpcall, {
+	__call = function(_, ...)
+		return xxpcall_run(...)
+	end
+})
