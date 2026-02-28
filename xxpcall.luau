@@ -3,7 +3,7 @@ local xxpcall = {}
 local asrt, isit = assert, type
 
 local function xxpcall_run(RetryAttempts, Cooldown, MainFunction, CallBackFunc)
-    --// if your not an idiot (or not connect inside a Remote) you can remove this enitre check
+    --// if your not an idiot (or not using a param that can change like one of the Params in a Remote) you can remove this enitre check
 	asrt(isit(RetryAttempts) == "number", "RetryAttempts must be a number")
 	asrt(RetryAttempts >= 0, "RetryAttempts must not be lower than 0")
 	asrt(not math.isinf(RetryAttempts), "RetryAttempts cannot be infinite")
