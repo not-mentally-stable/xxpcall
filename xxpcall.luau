@@ -11,7 +11,6 @@ local function xxpcall_run(RetryAttempts, Cooldown, MainFunction, CallBackFunc)
 	asrt(isit(Cooldown) == "number", "Cooldown must be a number")
 	asrt(Cooldown >= 0, "Cooldown must not be lower than 0")
 	asrt(Cooldown <= 10000, "Cooldown must not exceed 10000")
-	asrt(not math.isinf(Cooldown), "Cooldown cannot be infinite")
 
 	asrt(isit(MainFunction) == "function", "MainFunction must be a function")
 
