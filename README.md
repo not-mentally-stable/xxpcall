@@ -28,7 +28,7 @@ xxpcall(
 `RetryAttempts`
 - Type: `number`
 - Must be `>= 0`
-- Must not be infinite (duh)
+- Must not be infinite or nan (duh)
 - Defines how many times the function will be attempted.
 If set to `0`, the function will not run and immediately return failure.
 
@@ -36,8 +36,8 @@ If set to `0`, the function will not run and immediately return failure.
 - Type: `number`
 - Must be `>= 0`
 - Must not exceed `10000`
-- Must not be infinite
-Time in seconds to wait between failed attempts.
+- Must not be infinite or nan
+time in seconds to wait between failed attempts.
 
 `MainFunction`
 - Type: `function`
@@ -67,8 +67,7 @@ result: any
 ---
 
 ## Examples
-
-the module uses the metamethod ``__call`` so you can directly call the table returned with the require like its a function :D!
+the module returns the function directly on require so you can call it directly
 
 **Basic Usage**
 
